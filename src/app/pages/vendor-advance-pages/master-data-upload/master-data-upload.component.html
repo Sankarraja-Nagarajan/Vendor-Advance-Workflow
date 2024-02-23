@@ -1,0 +1,75 @@
+<div class="d-flex mt-4">
+
+    <div class="row w-100 justify-content-center gap-3">
+
+        <div class="col-12 col-sm-3 master-container">
+            <mat-card>
+                <div class="row justify-content-center">
+                    <div class="title d-flex justify-content-center sticky-top mt-3 mb-3 w-75">Master Tables</div>
+                    <div class="master-container-content">
+                        <ul class="row gap-2">
+                            <li *ngFor="let data of masterTables" class="master-content p-3 ClickedAllCard" [class.active]="activeTable == data.TableName"  (click)="CardClicked(data.TableName)" (click)="selectTable(data.TableName)" [matTooltip]="getTooltipMessage(data)"
+                            aria-label="Button that displays a tooltip when focused or hovered over" matTooltipPosition="right">
+                                <div class="d-flex justify-content-between">
+                                    <div>{{data.TableName}}</div>
+                                    <div>{{data.RowCount}}</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+
+        <div class="col-12 col-sm-8 master-table-container">
+            <mat-card>
+                <div>
+                    <div class="title d-flex justify-content-center sticky-top mt-3 mb-3">Master Table Template</div>
+                    <div class="d-flex justify-content-between p-2">
+                        <div class="tablename">{{tableName}}</div>
+                        <div *ngIf="notes"><b>*</b> {{notes}}</div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="col">
+                            <form class="d-flex justify-content-start ps-2" [formGroup]="masterTableFormGroup" *ngFor="let control of masterTableFormGroup.controls | keyvalue">
+                                <mat-form-field appearance="outline">
+                                  <mat-label>{{ control.key }}</mat-label>
+                                  <input matInput type="text" [formControlName]="control.key">
+                                </mat-form-field>
+                            </form>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex justify-content-center"  *ngIf="showSearchBtn">
+                                <button mat-raised-button class="download-btn" (click)="downloadTemplate()">Download Template</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between p-2">
+                        <button *ngIf="showSearchBtn" mat-raised-button (click)="searchDataFromTable()">Execute</button>
+                        <button *ngIf="showSearchBtn" mat-raised-button (click)="downloadMasterData()">MD Download</button>
+                        <button *ngIf="showSearchBtn" mat-raised-button type="button" (click)="uploadData.click()">
+                            <mat-icon>upload</mat-icon>
+                            <span>Upload</span>
+                            <input #uploadData type="file" onclick="this.value=null" (change)="uploadMasterData($event)" style="display:none;" />
+                        </button>
+                    </div>
+                </div>
+                <div class="table-container overflow-auto">
+                    <table *ngIf="showTable" [dataSource]="dataSource" class="mt-2" mat-table class="overflow-auto">
+
+                        <ng-container *ngFor="let col of tableColumns" [matColumnDef]="col">
+                            <mat-header-cell *matHeaderCellDef> {{ col | titlecase }} </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element[col]}} </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: tableColumns; sticky: true"></mat-row>
+
+                    </table>
+                </div>
+            </mat-card>
+        </div>
+
+    </div>
+    
+</div>

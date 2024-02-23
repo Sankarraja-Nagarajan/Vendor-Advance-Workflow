@@ -5,6 +5,10 @@ import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { TokenService } from '../../../Services/token.service';
+import { Router } from '@angular/router';
+import { ForgotPasswordDialogComponent } from '../../../pages/authentication/forgot-password-dialog/forgot-password-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'ngx-header',
@@ -16,6 +20,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
+  role : string;
+  userFirstLetter : string;
 
   themes = [
     {
@@ -38,22 +44,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [ { title: 'Profile' }, { title: 'Log out', link : '/pages/authentication/login' } ];
+
+  collapsed = true;
+  toggleCollapsed(): void {
+    this.collapsed = !this.collapsed;
+  }
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private themeService: NbThemeService,
-              private userService: UserData,
               private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService) {
+              private breakpointService: NbMediaBreakpointsService, 
+              private _tokenService : TokenService, 
+              private _router : Router, 
+              private _dialog : MatDialog) {
   }
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
 
-    this.userService.getUsers()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.nick);
+    // this.userService.getUsers()
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((users: any) => this.user = users.nick);
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
@@ -69,6 +82,43 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+
+
+      this._tokenService.userName$.subscribe({
+        next : (response) => 
+        {
+          var token = this._tokenService.decryptToken(response);
+          this.user = token.Username;
+          this.role = token.Role;
+        }
+      })
+
+
+      if(!this.user)
+      {
+        var token = this._tokenService.decryptToken(localStorage.getItem('VendorToken'));
+        this.user = token.Username;
+        this.userFirstLetter = this.user.substring(0, 1);
+        this.role = token.Role;
+      }
+
+  }
+
+  logout()
+  {
+    localStorage.removeItem('VendorToken');
+    this._router.navigate(['pages/authentication/login']);
+  }
+
+  changePassword()
+  {
+    this.toggleCollapsed();
+    this._dialog.open(ForgotPasswordDialogComponent, 
+      {
+        disableClose: true,
+        backdropClass: 'userActivationDialog',
+        data : 'Change Password',
+      })
   }
 
   ngOnDestroy() {

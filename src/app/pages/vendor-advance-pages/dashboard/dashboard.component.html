@@ -1,0 +1,161 @@
+<div class="container-fluid">
+    <mat-card class="dash-card mb-2 mt-2">
+        <mat-card-content>
+           <div class="row gap-5">
+
+            <div class="d-flex col justify-content-center ClickedAllCard" [class.active]="activeCard == 1"  (click)="CardClicked(1)" (click)="selectStatus('All')">
+                <div id="All" class="row">
+                    <div class="d-flex">
+                        <div class="AllDot mt-1"></div>
+                        <span class="AllTextOutline ms-1">All</span>
+                    </div>
+                    <div class="d-flex justify-content-center">{{this.dashboardTable.allVendorDetails.length}}</div>
+                 </div> 
+            </div>
+
+            <div class="d-flex col justify-content-center ClickedPendingCard" [class.active]="activeCard == 2" (click)="CardClicked(2)" (click)="selectStatus('Pending')">
+                <div id="Pending" class="row justify-content-start">
+                    <div class="d-flex">
+                        <div class="PendingDot mt-1"></div>
+                        <span class="PendingTextOutline ms-1">Pending</span>
+                    </div>
+                    <div class="d-flex justify-content-center">{{this.dashboardTable.pendingVendorDetails.length}}</div>
+                </div>  
+            </div>
+
+            <div class="d-flex col justify-content-center ClickedApproveCard" [class.active]="activeCard == 3" (click)="CardClicked(3)" *ngIf="userDetails.Role != 'I'" (click)="selectStatus('Approved')">
+                <div id="Approve" class="row justify-content-start">
+                    <div class="d-flex">
+                        <div class="ApproveDot mt-1"></div>
+                        <span class="ApproveTextOutline ms-1">Approved</span>
+                    </div>
+                    <div class="d-flex justify-content-center">{{this.dashboardTable.approvedVendorDetails.length}}</div>
+                </div>  
+            </div>
+
+            <div class="d-flex col justify-content-center ClickedApproveCard" [class.active]="activeCard == 5" (click)="CardClicked(5)" *ngIf="userDetails.Role == 'I'" (click)="selectStatus('Completed')">
+                <div id="Approve" class="row justify-content-start">
+                    <div class="d-flex">
+                        <div class="ApproveDot mt-1"></div>
+                        <span class="ApproveTextOutline ms-1">Completed</span>
+                    </div>
+                    <div class="d-flex justify-content-center">{{this.dashboardTable.completedVendorDetails.length}}</div>
+                </div>  
+            </div>
+
+            <div class="d-flex col justify-content-center ClickedRejectCard" [class.active]="activeCard == 4" (click)="CardClicked(4)" (click)="selectStatus('Rejected')">
+                <div id="Reject" class="row justify-content-start">
+                    <div class="d-flex">
+                        <div class="RejectDot mt-1"></div>
+                        <span class="RejectTextOutline ms-1">Rejected</span>
+                    </div>
+                    <div class="d-flex justify-content-center">{{this.dashboardTable.rejectedVendorDetails.length}}</div>
+                </div>  
+            </div>
+            
+           </div>
+        </mat-card-content>  
+    </mat-card>
+    <div>
+        <div class="borders"></div>
+        <div class="borderstraight"></div>
+        <mat-card>
+            <mat-card-content>
+
+
+                <div class="row justify-content-between" *ngIf="userDetails.Role != 'A'">
+                    <div class="col-4 row mb-3">
+                        <div class="col" *ngIf="!showDownload">
+                            <button class="export-excel" mat-raised-button (click)="selectTrackingNo()"><mat-icon>download</mat-icon>Export Excel</button>
+                        </div>
+                        <div class="col d-flex gap-3" *ngIf="showDownload">
+                            <button mat-raised-button class="export-btn" (click)="download()"> <mat-icon>download</mat-icon> Download </button>
+                            <button mat-raised-button class="export-cancel-btn" (click)="cancelDownload()"> <mat-icon>cancel_presentation</mat-icon> Cancel </button>
+                        </div>
+                     </div>
+                     <div class="col-3" *ngIf="pendingBtn">
+                        <button class="pending-btn" mat-raised-button (click)="pendingDownload()"><mat-icon>download</mat-icon>Pending Excel Download</button>
+                     </div>
+                 </div>
+
+
+                <div class="row overflow-auto table">
+                    <table mat-table [dataSource]="dataSource">
+
+
+                        <ng-container matColumnDef="SELECET">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <mat-checkbox (change)="$event ? masterToggle() : null"
+                                    [checked]="selection.hasValue() && isAllSelected()"
+                                    [indeterminate]="selection.hasValue() && !isAllSelected()">
+                                  
+                                </mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                <mat-checkbox (click)="$event.stopPropagation()"
+                                    (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                                    >
+                                </mat-checkbox>
+                            </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="TrackingNO">
+                            <th mat-header-cell *matHeaderCellDef> Tracking NO </th>
+                            <td mat-cell *matCellDef="let data"> {{ data.TrackingNo }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="PO_Number">
+                            <th mat-header-cell *matHeaderCellDef> PO Number </th>
+                            <td mat-cell *matCellDef="let data"> {{ data.PurchaseDocumentNo }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="PurchasingGroup">
+                            <th mat-header-cell *matHeaderCellDef> Purchasing Group </th>
+                            <td mat-cell *matCellDef="let data"> {{ data.PurchaseGroup }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Amount">
+                            <th mat-header-cell *matHeaderCellDef> Amount </th>
+                            <td mat-cell *matCellDef="let data"> {{ data.Amount }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="AdvanceHistory">
+                            <th mat-header-cell *matHeaderCellDef> Advance History </th>
+                            <td mat-cell *matCellDef="let data"> {{ data.AdvanceHistory }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Currency">
+                            <th mat-header-cell *matHeaderCellDef> Currency </th>
+                            <td mat-cell *matCellDef="let data"> {{ data.Currency }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Review">
+                            <th mat-header-cell *matHeaderCellDef> Review </th>
+                            <td mat-cell *matCellDef="let data"> <mat-icon class="review" (click)="view(data.TrackingNo)">remove_red_eye</mat-icon> </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Status">
+                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                            <td mat-cell *matCellDef="let data">
+                                <span *ngIf="data.Status == 'Rejected'" class="reject-stat" (click)="checkStatus(data)">Rejected</span>
+                                <span *ngIf="data.Status == 'Approved'" class="approve-stat" (click)="checkStatus(data)">Approved</span>
+                                <span *ngIf="data.Status == 'Active'"><button mat-raised-button (click)="approve(data.TrackingNo)" class="approve-btn"><mat-icon>label_important</mat-icon>Review</button></span>
+                            </td>
+                        </ng-container>
+        
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row ; columns : displayedColumns;"></tr>
+                    </table>
+                </div>
+
+                <div *ngIf="!tableData?.length" class="d-flex align-items-center gap-3" style="background-color: white;">
+                    <mat-icon class="icon justify-content-start">info</mat-icon>
+                    <span>No Records Found...!</span>
+                </div>
+
+                <mat-paginator class="justify-content-end p-0" [style.display]="tableData?.length?'inherit':'none'"
+                    [length]="tableData?.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"
+                    aria-label="Select page">
+                </mat-paginator>
+
+            </mat-card-content>
+           
+        </mat-card>
+    </div>
+</div>

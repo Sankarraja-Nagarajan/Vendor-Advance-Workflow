@@ -1,0 +1,78 @@
+.title
+{
+    font-weight: bold;
+    background-color: white;
+    color: orange;
+}
+
+.master-container
+{
+    
+
+    .master-container-content
+    {
+        width: 90%;
+        max-height: 60vh !important;
+        overflow: auto;
+    }
+    
+    .master-content
+    {
+        cursor: pointer;
+    }
+
+    .master-content:hover
+    {
+        background-color: rgb(255, 172, 48);
+        color: #800020;
+        border-radius: 10px;
+        font-weight: bold;
+    }
+
+}
+
+.master-table-container
+{
+
+    mat-card
+    {
+        min-height: 70vh;
+    }
+
+}
+
+.download-btn
+{
+    background-color: orange !important;
+    color: white !important;
+}
+
+
+.table-container
+{
+    max-height: 270px;
+}
+
+
+
+// .ClickedAllCard{
+//     padding: 10px;
+//     transition: border-bottom 0.3s;
+//     cursor: pointer;
+// }
+
+.ClickedAllCard.active
+{
+    background-color: rgb(255, 172, 48);
+        color: #800020;
+        border-radius: 10px;
+        font-weight: bold;
+}
+
+
+.tablename
+{
+    font-size: 20px;
+    font-weight: bold;
+    color: #800020;
+}

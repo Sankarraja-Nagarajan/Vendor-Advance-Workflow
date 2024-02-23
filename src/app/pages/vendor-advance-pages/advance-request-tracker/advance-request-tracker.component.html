@@ -1,0 +1,257 @@
+<div class="container-fluid">
+
+    <form [formGroup]="vendorForm">
+
+        <div class="row gap-4">
+
+            <div class="row mt-4 request-forms">
+
+                <div class="col-12 col-md-8 row justify-content-center gy-2">
+
+                    <div class="col-8 col-sm-6 col-md-4">
+                            <div class="row">
+                                <mat-label> Tracking NO </mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="text" formControlName="TrackingNo" readonly>
+                                </mat-form-field>
+                            </div>
+                    </div>
+
+                    <div class="col-8 col-sm-6 col-md-4 poNumber-block">
+                        <div class="row">
+                                <mat-label>PO Number</mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="text" formControlName="PurchaseDocumentNo">
+                                    <mat-icon matSuffix (click)="getVendorDetails()">search</mat-icon>
+                                </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-8 col-sm-6 col-md-4">
+                        <div class="row">
+                                <mat-label>Installment</mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="text" formControlName="Installment" readonly>
+                                </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-8 col-sm-6 col-md-4">
+                        <div class="row">
+                                <mat-label>Category</mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="text" formControlName="DocumentCategory" readonly>
+                                </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-8 col-sm-6 col-md-4">
+                        <div class="row">
+                                <mat-label>Company Code</mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="text" formControlName="CompanyCode" readonly>
+                                </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-8 col-sm-6 col-md-4">
+                        <div class="row">
+                                <mat-label>Document Type</mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="text" formControlName="DocumentType" readonly>
+                                </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-8 col-sm-6 col-md-4">
+                        <div class="row">
+                                <mat-label>Document Date</mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="text" formControlName="DocumentDate" readonly>
+                                </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-8 col-sm-6 col-md-4">
+                        <div class="row">
+                            <mat-label>Spl G/L Indicator</mat-label>
+                            <mat-form-field appearance="outline">
+                                <!-- <input matInput type="text" formControlName="splIndicator" readonly> -->
+                                <mat-select formControlName="splIndicator">
+                                    <mat-option *ngFor="let s of spl" [value]="s.Sg">{{s.Sg}} - {{s.Description}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                <!-- </div>
+
+                <div class="col-8 col-sm-6 col-md-4-12 col-8 col-sm-6 col-md-4-md-4 row gap-2 mb-1"> -->
+
+                    <div class="col-8 col-sm-6 col-md-4">
+                        <div class="row vendor-field">
+                            <!-- <div class="row"> -->
+                                    <div class="d-flex justify-content-between">
+                                        <mat-label> Vendor </mat-label>
+                                        <span>{{vendorForm.value.VendorCode}}</span>
+                                    </div>
+                                    <mat-form-field appearance="outline">
+                                        <input matInput type="text" formControlName="VendorName" readonly>
+                                    </mat-form-field>
+                                    <!-- <div class="d-flex justify-content-end"><span>{{vendorForm.value.VendorCode}}</span></div> -->
+                            <!-- </div>
+                            <div class="d-flex justify-content-end">
+                                <span>{{vendorForm.value.VendorCode}}</span>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="col-8 col-sm-6 col-md-4">
+                        <div class="row">
+                            <!-- <div class="row"> -->
+                                    <div class="d-flex justify-content-between">
+                                        <mat-label>Purchasing group</mat-label>
+                                        <span>{{vendorForm.value.PurchaseGroup}}</span>
+                                    </div>
+                                    <mat-form-field appearance="outline">
+                                        <input matInput type="text" formControlName="PurchaseGroupName" readonly>
+                                    </mat-form-field>
+                                    <!-- <div class="d-flex justify-content-end"><span>{{vendorForm.value.PurchaseGroup}}</span></div> -->
+                            <!-- </div> -->
+                            <!-- <div class="d-flex justify-content-end">
+                                <span>{{vendorForm.value.PurchaseGroup}}</span>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="col-8 col-sm-6 col-md-4 netvalue-field">
+                        <div class="row">
+                                <mat-label>Net value of PO</mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="text" formControlName="NetValue" readonly>
+                                </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-8 col-sm-6 col-md-4">
+                        <div class="row">
+                                <mat-label>Advance History</mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="text" formControlName="AdvanceHistory" readonly>
+                                </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-8 col-sm-6 col-md-4">
+                        <div class="row">
+                                <mat-label>Currency</mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="text" formControlName="Currency" readonly>
+                                </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-8 col-sm-6 col-md-4">
+                        <div class="row amount-field">
+                                <mat-label>Amount</mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="number" step='0.01' value='0.00' formControlName="Amount">
+                                </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-8 col-sm-6 col-md-4">
+                        <div class="row verifier-field">
+                                <mat-label>Purchase Verifier</mat-label>
+                                <mat-form-field appearance="outline">
+                                    <mat-select formControlName="PurchaseVerifier">
+                                        <mat-option *ngFor="let verifier of purchaseVerifiers" [value]="verifier.UserId">{{verifier.UserName}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-12 col-md-4">
+
+                    <div class="row gap-3">
+
+                        <div>
+                            <mat-label>Comments</mat-label>
+                            <textarea class="col-12" formControlName="Comments"></textarea>
+                        </div>
+
+                        <div *ngIf="showDownloadAttachment">
+                            <mat-card class="p-3">
+
+                                <span class="title row  ps-4 mb-2">Approval History</span>
+                                <div class="TitleBorder"></div>
+    
+                                <div class="overflow-auto table">
+                                    <table mat-table [dataSource]="approveDataSource">
+                                        <ng-container matColumnDef="Role-col">
+                                            <th mat-header-cell *matHeaderCellDef> Role </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.Role}} </td>
+                                        </ng-container>
+            
+                                        <ng-container matColumnDef="Name-col">
+                                            <th mat-header-cell *matHeaderCellDef> Name </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.UserName}} </td>
+                                        </ng-container>
+            
+                                        <ng-container matColumnDef="Status-col">
+                                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+                                        </ng-container>
+
+                                        <tr mat-header-row *matHeaderRowDef="approveColumns; sticky : true"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: approveColumns;"></tr>
+
+                                    </table>
+                                </div>
+
+                            </mat-card>
+                        </div>
+
+                    </div>
+                    
+                </div>
+                
+            </div>
+        
+
+            <div *ngIf="showapproval" class="d-flex justify-content-between">
+                <div class="d-flex justify-content-start">
+                    <button mat-raised-button class="attachment" type="button" (click)="uploadInput.click()"><mat-icon>upload</mat-icon>Attachment
+                    <input #uploadInput type="file" onclick="this.value=null" (change)="onUploadFileChange($event)" style="display:none;" />
+                    </button>
+                </div>
+
+                <div class="d-flex justify-content-end gap-3">
+                    <button class="ClearBtn" mat-raised-button routerLink="/pages/venderadvancepages/dashboard"><mat-icon class="ClearIcon">clear</mat-icon>Cancel</button>
+                    <button class="DoneBtn" mat-raised-button (click)="execute()"><mat-icon class="save">save</mat-icon>Execute</button>
+                </div>
+            </div>
+
+
+            <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-start" *ngIf="showDownloadAttachment">
+                    <button mat-raised-button class="attachment" (click)="getApprovalDocument()"><mat-icon>archive</mat-icon>Download Attachment</button>
+                </div>
+                <div class="d-flex gap-3" *ngIf="showapprovalReject">
+                    <button class="backBtn" mat-raised-button routerLink="/pages/venderadvancepages/dashboard"><mat-icon>arrow_back</mat-icon>Back</button>
+                    <button class="ClearBtn" mat-raised-button (click)="reject()"><mat-icon>clear</mat-icon>Reject</button>
+                    <button class="DoneBtn" mat-raised-button (click)="approve()"><mat-icon>done</mat-icon>Approve</button>
+                </div>
+            </div>
+
+            <!-- <div class="d-flex justify-content-end" *ngIf="showapproval">
+                <button class="ClearBtn" mat-raised-button routerLink="/pages/venderadvancepages/dashboard"><mat-icon class="ClearIcon">arrow_back</mat-icon>Back</button>
+            </div> -->
+
+
+        </div>
+
+    </form>
+</div>

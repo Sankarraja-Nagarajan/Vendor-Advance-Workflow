@@ -16,6 +16,10 @@ export const routes: Routes = [
       .then(m => m.PagesModule),
   },
   {
+    path : 'theme',
+    loadChildren : () => import ('./@theme/theme.module').then( t =>t.ThemeModule)
+  },
+  {
     path: 'auth',
     component: NbAuthComponent,
     children: [
@@ -50,7 +54,7 @@ export const routes: Routes = [
 ];
 
 const config: ExtraOptions = {
-  useHash: false,
+  useHash: true,
 };
 
 @NgModule({

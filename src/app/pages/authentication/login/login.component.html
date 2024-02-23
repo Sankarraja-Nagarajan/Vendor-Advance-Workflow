@@ -1,0 +1,109 @@
+<!-- <div class="login">
+    <mat-card class="d-flex ms-5">
+        <mat-card-content>
+            <div class="login-img row">
+                <div class="d-flex flex-column col-md-7 d-flex d-none d-md-block">
+                    <div class="image"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex justify-content-center">
+                        <img class="w-50" src="/assets/images/ContiLogo.png" alt="Continental-Logo">
+                    </div>  
+                    <div class="d-flex justify-content-center">
+                        <span class="title">Login</span>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        <span class="subTitle">Welcome back ! Please Sign In to continue</span>
+                    </div>
+                    <div class="row gap-3 mt-4">
+                        <form [formGroup]="loginFormGroup">
+                            <div class="row gap-3">
+                                <div class="d-flex justify-content-center">
+                                    <mat-form-field class="w-75" appearance="outline">
+                                        <mat-label>User Id</mat-label>
+                                        <input class="formField" matInput formControlName="UserId">
+                                        <mat-error *ngIf="loginFormGroup.get('UserId')?.hasError('required')">
+                                            UserId is Required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <mat-form-field class="w-75" appearance="outline">
+                                        <mat-label>Password</mat-label>
+                                        <input [type]="hide ? 'password' : 'text'" class="formField" matInput formControlName="Password">
+                                        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                        <mat-error *ngIf="loginFormGroup.get('Password')?.hasError('required')">
+                                            Password is Required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center forgot">
+                                <div class="w-75 d-flex justify-content-end">
+                                    <span>Forgot Password?</span>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="d-flex justify-content-center">
+                            <button mat-flat-button (click)="Login()" class="login-btn">Login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div> -->
+
+
+
+<div class="container-fluid login">
+    <div class="row">
+        <div class="col-md-8 d-flex d-none d-md-block p-0">
+           <div class="image"></div>
+         </div>
+         <div class="col-md-4 mt-5">
+            <mat-card class="d-flex w-80 mt-5">
+               <div class="d-flex col-12 justify-content-between">
+                <div class="col-md-3">
+                    <img class="w750" src="/assets/images/Continental_Stand_Alone_Logo_Yellow_sRGB.png" alt="Continental-Logo" height="70px">
+                </div>  
+                <div  class="col-md-9 mt-4">
+                    <span class="HeadingTitle">VENDOR ADVANCE</span>
+                </div>
+               </div>
+                <div class="d-flex justify-content-center ">
+                    <span class="title">Sign In</span>
+                </div>
+                <div class="row gap-3 mt-3">
+                    <form [formGroup]="loginFormGroup">
+                        <div class="row gap-1">
+                            <div class="d-flex justify-content-center">
+                                <mat-form-field class="w-75" appearance="outline">
+                                    <mat-label>User Id</mat-label>
+                                    <input class="formField" matInput formControlName="UserId">
+                                </mat-form-field>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <mat-form-field class="w-75" appearance="outline">
+                                    <mat-label>Password</mat-label>
+                                    <input [type]="hide ? 'password' : 'text'" class="formField" matInput formControlName="Password">
+                                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center forgot">
+                            <div class="w-75 d-flex justify-content-end">
+                                <span (click)="OpenForgotPasswordDialog('Forgot Password')">Forgot Password</span>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="d-flex justify-content-center mb-3">
+                        <button class="login-btn" mat-flat-button (click)="Login()">Login</button>
+                    </div>
+                </div>
+    
+            </mat-card>
+        </div>
+    </div>
+  
+</div>

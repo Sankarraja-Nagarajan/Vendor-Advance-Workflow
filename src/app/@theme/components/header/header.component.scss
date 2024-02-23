@@ -13,6 +13,19 @@
     width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
   }
 
+  ::ng-deep nb-user.size-medium .user-name {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    color :white;
+  }
+
+  ::ng-deep nb-user.shape-round .user-picture {
+    font-size: 20px;
+    font-weight: 600;
+    color :white;
+  }
+
   nb-action {
     height: auto;
     display: flex;
@@ -44,11 +57,13 @@
 
     .logo {
       padding: 0 1.25rem;
-      font-size: 1.75rem;
+      font-size: 20px;
+      font-weight: bold;
       @include nb-ltr(border-left, 1px solid nb-theme(divider-color));
       @include nb-rtl(border-right, 1px solid nb-theme(divider-color));
       white-space: nowrap;
       text-decoration: none;
+      color : white;
     }
   }
 
@@ -67,4 +82,109 @@
       display: none;
     }
   }
+
+}
+
+
+nav{
+  width: 100vw;
+  box-shadow: none !important;
+}
+
+.nav-content{
+  background-color: rgb(255, 158, 48);
+  color: black;
+  border-radius : 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.menu-link{
+  color: black
+}
+
+.nav-content :hover{
+  color: white !important;
+}
+
+.nav-title{
+
+  font-weight: bold;
+  font-size: 21px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+}
+
+.nav-item :hover
+{
+color: black;
+border-radius : 10px;
+cursor: pointer;
+}
+.nav-link
+{
+font-weight: bold;
+font-size: 18px;
+font-family: Arial, Helvetica, sans-serif;
+color: white;
+}
+
+
+.menu-item
+{
+cursor: pointer;
+}
+
+
+.user-logo
+{
+border-radius: 50%;
+border: 2px solid black;
+font-weight: bold;
+width: 40px;
+height:40px;
+}
+
+.user-title
+{
+font-weight: bold;
+}
+
+.mat-menu{
+background-color: white;
+}
+
+::ng-deep .mat-mdc-menu-content
+{
+  width: 250px !important;
+  margin-top: 10px !important;
+}
+
+.mat-menu :hover{
+background-color: rgba(217, 213, 213, 0.928);
+color:white !important;
+}
+.text{
+font-weight: 600;
+font-size: 15px;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.text :hover{
+color: white;
+}
+
+.active
+{
+  color: black;
+}
+
+.active1
+{
+  color: white;
+}
+
+::ng-deep .userActivationDialog
+{
+    background: rgba(128, 128, 128, 0.61) !important;
 }
